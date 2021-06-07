@@ -1,0 +1,7 @@
+# GHDL outputs
+*.v87
+*.v93
+*.v08
+*.vcd
+*.cf
+e~*.lst
