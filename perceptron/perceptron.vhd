@@ -7,7 +7,6 @@ entity perceptron is
 
   port (
     inputs : in inputs_buffer;
-    clk : in std_logic;
     output : out std_logic_vector(bus_bits - 1 downto 0));
 end perceptron;
 
@@ -20,19 +19,18 @@ architecture v1 of perceptron is
   X"00000001",
   X"00000001");
 
-  signal temp : signed(bus_bits * 2 - 1 downto 0) := (others => '0');
-
 begin
 
-  process (clk)
+  process (inputs)
+    variable temp : signed(bus_bits * 2 - 1 downto 0);
   begin
-    if rising_edge(clk) then
-      for i in 0 to (inputs_num - 1) loop
-        temp <= signed(inputs(i)) * w(i) + temp;
-      end loop;
-    end if;
-  end process;
 
-  output <= std_logic_vector(temp(bus_bits - 1 downto 0));
+    temp := (others => '0');
+    for i in 0 to (inputs_num - 1) loop
+      temp := signed(inputs(i)) * w(i) + temp;
+    end loop;
+    output <= std_logic_vector(temp(bus_bits - 1 downto 0));
+
+  end process;
 
 end v1;

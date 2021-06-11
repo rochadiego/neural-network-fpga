@@ -1,10 +1,10 @@
 #!/bin/bash
 
-ghdl -a perceptron_pkg.vhd
-ghdl -a perceptron.vhd
-ghdl -a perceptron_tb.vhd
-ghdl -e perceptron_tb
-ghdl -r perceptron_tb --stop-time=50fs --vcd=perceptron.vcd
+ghdl -a --std=08 --time-resolution=ns perceptron_pkg.vhd
+ghdl -a --std=08 --time-resolution=ns perceptron.vhd
+ghdl -a --std=08 --time-resolution=ns perceptron_tb.vhd
+ghdl -e --std=08 --time-resolution=ns perceptron_tb
+ghdl -r --std=08 --time-resolution=ns perceptron_tb --stop-time=50ns --vcd=perceptron.vcd
 
 gtkwave perceptron.vcd
 
