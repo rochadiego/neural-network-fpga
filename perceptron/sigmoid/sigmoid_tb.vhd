@@ -35,10 +35,20 @@ begin
     output => output
   );
 
-  input <= x"0000",
-    x"1000" after 10 ns,
-    x"2600" after 20 ns,
-    x"5000" after 30 ns,
-    x"5020" after 40 ns;
-
+  input <= x"E000",
+    x"C000" after 5 ns,  --C0f5
+    x"BCCC" after 10 ns, 
+    x"A385" after 15 ns,
+    x"9828" after 20 ns,
+    x"8D47" after 25 ns,
+    x"8599" after 30 ns,
+    x"0599" after 35 ns, -- aqui
+    x"0D47" after 40 ns, 
+    x"1828" after 45 ns,
+    x"2385" after 50 ns,
+    x"3CCC" after 55 ns,
+    x"40F5" after 60 ns,
+    x"6000" after 65 ns,
+    x"0000" after 70 ns;
+    
 end;
