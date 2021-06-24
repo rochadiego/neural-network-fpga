@@ -35,20 +35,20 @@ begin
     output => output
   );
 
-  input <= x"E000",
-    x"C000" after 5 ns,  --C0f5
-    x"BCCC" after 10 ns, 
-    x"A385" after 15 ns,
-    x"9828" after 20 ns,
-    x"8D47" after 25 ns,
-    x"8599" after 30 ns,
-    x"0599" after 35 ns, -- aqui
-    x"0D47" after 40 ns, 
-    x"1828" after 45 ns,
-    x"2385" after 50 ns,
-    x"3CCC" after 55 ns,
-    x"40F5" after 60 ns,
-    x"6000" after 65 ns,
+  input <= x"A000",      -- -6.00
+    x"BF0B" after 5 ns,  -- -4.06
+    x"C334" after 10 ns, -- -3.80
+    x"DC7B" after 15 ns, -- -2.22
+    x"E7D8" after 20 ns, -- -1.51
+    x"F2B9" after 25 ns, -- -0.83
+    x"FA67" after 30 ns, -- -0.35
+    x"0599" after 35 ns, --  0.35
+    x"0D47" after 40 ns, --  0.83
+    x"1828" after 45 ns, --  1.51
+    x"2385" after 50 ns, --  2.22
+    x"3CCC" after 55 ns, --  3.80
+    x"40F5" after 60 ns, --  4.06
+    x"6000" after 65 ns, --  6.00
     x"0000" after 70 ns;
     
 end;
