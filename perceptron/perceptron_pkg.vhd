@@ -5,7 +5,7 @@ use IEEE.numeric_std.all;
 package perceptron_pkg is
 
   -- bits de barramento
-  constant bus_bits : integer := 32;
+  constant bus_bits : integer := 16;
 
   -- número de entradas
   constant inputs_num : integer := 4;

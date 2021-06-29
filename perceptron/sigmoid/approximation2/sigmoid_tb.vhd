@@ -8,35 +8,26 @@ end;
 architecture bench of sigmoid_tb is
 
   component sigmoid
-    generic (
-      bus_bits : integer
-    );
     port (
-      input  : in std_logic_vector(bus_bits - 1 downto 0);
-      output : out std_logic_vector(bus_bits - 1 downto 0)
+      input  : in std_logic_vector(15 downto 0);
+      output : out std_logic_vector(15 downto 0)
     );
   end component;
-
-  -- Generics
-  constant bus_bits : integer := 16;
-
+  
   -- Ports
-  signal input  : std_logic_vector(bus_bits - 1 downto 0);
-  signal output : std_logic_vector(bus_bits - 1 downto 0);
+  signal input  : std_logic_vector(15 downto 0);
+  signal output : std_logic_vector(15 downto 0);
 
 begin
 
   sigmoid_inst : sigmoid
-  generic map(
-    bus_bits => bus_bits
-  )
   port map(
     input  => input,
     output => output
   );
 
-  input <= x"A000",      -- -6.00
-    x"BF0B" after 5 ns,  -- -4.06
+  input <= x"A000", -- -6.00
+    x"BF0B" after 5 ns, -- -4.06
     x"C334" after 10 ns, -- -3.80
     x"DC7B" after 15 ns, -- -2.22
     x"E7D8" after 20 ns, -- -1.51

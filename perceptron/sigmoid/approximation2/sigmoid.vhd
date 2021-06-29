@@ -3,13 +3,9 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.fixed_pkg.all;
 entity sigmoid is
-  generic (
-    bus_bits : integer := 16
-  );
-
   port (
-    input  : in std_logic_vector(bus_bits - 1 downto 0);
-    output : out std_logic_vector(bus_bits - 1 downto 0)
+    input  : in std_logic_vector(15 downto 0);
+    output : out std_logic_vector(15 downto 0)
   );
 end entity sigmoid;
 

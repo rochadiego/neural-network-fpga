@@ -1,9 +1,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use ieee.fixed_pkg.all;
 
 library  work;
-
 use work.perceptron_pkg.all;
 
 
@@ -35,24 +35,24 @@ begin
     output => output
   );
 
-  inputA <= x"00000003",
-    x"00000010" after 10 ns,
-    x"00000002" after 20 ns,
-    x"00000000" after 30 ns;
+  inputA <= x"0003",
+    x"0010" after 10 ns,
+    x"0002" after 20 ns,
+    x"0000" after 30 ns;
 
-  inputB <= x"00000001",
-    x"00000000" after 10 ns,
-    x"00000003" after 20 ns,
-    x"00000000" after 30 ns;
+  inputB <= x"0001",
+    x"0000" after 10 ns,
+    x"0003" after 20 ns,
+    x"0000" after 30 ns;
 
-  inputC <= x"00000003",
-    x"00000010" after 10 ns,
-    x"00000002" after 20 ns,
-    x"00000000" after 30 ns;
+  inputC <= x"0003",
+    x"0010" after 10 ns,
+    x"0002" after 20 ns,
+    x"0000" after 30 ns;
 
-  inputD <= x"00000003",
-    x"00000010" after 10 ns,
-    x"00000002" after 20 ns,
-    x"00000000" after 30 ns;
+  inputD <= x"0003",
+    x"0010" after 10 ns,
+    x"0002" after 20 ns,
+    x"0000" after 30 ns;
 
 end;
