@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ghdl -a --std=08 --time-resolution=ns perceptron_pkg.vhd
-ghdl -a --std=08 --time-resolution=ns sigmoid.vhd
+ghdl -a --std=08 --time-resolution=ns sigmoid/approximation1/sigmoid.vhd
 ghdl -a --std=08 --time-resolution=ns perceptron.vhd
 ghdl -a --std=08 --time-resolution=ns perceptron_tb.vhd
 ghdl -e --std=08 --time-resolution=ns perceptron_tb
