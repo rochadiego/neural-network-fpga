@@ -4,7 +4,12 @@ use std.textio.all;
 package network_pkg is
   --Abstração de uma vetor coluna de std_logic_vector
   type coluna is array (integer range <>) of std_logic_vector;
+  type array_integer is array (integer range <>) of integer;
   --Constantes da rede
+
+  constant n_inputs_by_layer  : array_integer(0 to 1) := (2, 2);
+  constant n_neurons_by_layer : array_integer(0 to 1) := (2, 2);
+
   constant n_entradas : integer := 2;
   constant n_bits     : integer := 8;
   constant n_neuros   : integer := 2;

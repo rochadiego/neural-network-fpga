@@ -14,27 +14,27 @@ architecture rtl of network is
 
   component layer is
     generic (
-      n_layer : integer;
-      activation_type : string
+      layer_index  : integer
+      -- activation_type : string
     );
     port (
-      layer_IN   : in coluna(0 to n_entradas - 1)(n_bits - 1 downto 0);
-      layer_W_IN : in coluna(0 to n_entradas * n_neuros - 1)(n_bits - 1 downto 0);
-      layer_OUT  : out coluna(0 to n_neuros - 1)(n_bits - 1 downto 0)
+      layer_IN   : in coluna(0 to n_inputs_by_layer(layer_index) - 1)(n_bits - 1 downto 0);
+      layer_W_IN : in coluna(0 to n_inputs_by_layer(layer_index) * n_neurons_by_layer(layer_index) - 1)(n_bits - 1 downto 0);
+      layer_OUT  : out coluna(0 to n_neurons_by_layer(layer_index) - 1)(n_bits - 1 downto 0)
     );
   end component;
 
-  signal mem         : coluna(0 to n_entradas * n_neuros - 1)(n_bits - 1 downto 0) := init_ram_hex;--Magic!!!
-  constant n_layer : integer := 1;
-  constant activation_type : string := "relu";
+  constant layer_index  : integer := 0;
+  -- constant activation_type : string  := "relu";
+
+  signal mem : coluna(0 to n_entradas * n_neuros - 1)(n_bits - 1 downto 0) := init_ram_hex;--Magic!!!
 
 begin
 
   unica : layer
-  generic map (
-    n_layer => n_layer,
-    activation_type => activation_type
-  )
+  generic map(
+    layer_index  => 0
+      )
   port map(
     layer_IN   => INPUTS,
     layer_W_IN => mem,
