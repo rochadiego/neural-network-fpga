@@ -23,6 +23,13 @@ architecture rtl of network is
     );
   end component;
 
+  component sigmoid is
+    port (
+      input_sigmoid  : in slv;
+      output_sigmoid : out slv
+    );
+  end component;
+
   constant n_layers : integer := n_neurons_by_layer'right;
 
   signal all_weights : array_slv(0 to n_all_weights - 1) := init_ram_hex;
@@ -44,7 +51,7 @@ begin
   inputs_first_deep_layer <= network_input;
 
   -- parse weights
-  weights_first_deep_layer <= all_weights(0 to n_weights_by_layer(0) - 1);
+  weights_first_deep_layer  <= all_weights(0 to n_weights_by_layer(0) - 1);
   weights_second_deep_layer <= all_weights(n_weights_by_layer(0) to n_all_weights - 1);
 
   inst_first_deep_layer : layer generic map(
@@ -64,5 +71,7 @@ begin
     layer_OUT  => outputs_second_deep_layer);
 
   network_output <= outputs_second_deep_layer;
+
+  -- add neuronio aqui e função sigmoid
 
 end architecture;

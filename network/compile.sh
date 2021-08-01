@@ -2,6 +2,8 @@
 
 rm *.vcd
 ghdl -a --std=08 --time-resolution=ns network_pkg.vhd
+ghdl -a --std=08 --time-resolution=ns relu.vhd
+ghdl -a --std=08 --time-resolution=ns sigmoid.vhd
 ghdl -a --std=08 --time-resolution=ns neuron.vhd
 ghdl -a --std=08 --time-resolution=ns layer.vhd
 ghdl -a --std=08 --time-resolution=ns network.vhd
