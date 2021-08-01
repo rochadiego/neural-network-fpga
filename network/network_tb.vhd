@@ -11,32 +11,33 @@ architecture bench of network_tb is
 
   component network is
     port (
-      INPUTS  : in coluna(0 to n_entradas - 1)(n_bits - 1 downto 0);
-      OUTPUTS : out coluna(0 to n_neuros - 1)(n_bits - 1 downto 0));
+      network_input  : in array_slv(0 to n_inputs_by_layer(0) - 1);
+      network_output : out array_slv(0 to n_neurons_by_layer(0) - 1));
   end component;
 
-  signal input_A, input_B   : std_logic_vector(n_bits - 1 downto 0);
-  signal output_A, output_B : std_logic_vector(n_bits - 1 downto 0);
-  signal saida              : coluna(0 to n_neuros - 1)(n_bits - 1 downto 0);
+  signal input_A, input_B   : slv;
+  signal output_A, output_B : slv;
+  signal output_bench       : array_slv(0 to n_neurons_by_layer(0) - 1);
 
 begin
 
   dut : network port map(
-    INPUTS  => (input_A, input_B),
-    OUTPUTS => saida);
+    network_input  => (input_A, input_B),
+    network_output => output_bench);
 
-  output_A <= saida(0);
-  output_B <= saida(1);
-  input_A  <= "00000010",
-    "00000100" after 10 ns,
-    "00000011" after 20 ns,
-    "00000110" after 30 ns,
-    "00000000" after 40 ns;
+  output_A <= output_bench(0);
+  output_B <= output_bench(1);
 
-  input_B <= "00000011",
-    "00000110" after 10 ns,
-    "00000001" after 20 ns,
-    "00000000" after 30 ns,
-    "00000000" after 40 ns;
+  input_A <= x"1000",
+    x"2000" after 30 ns,
+    x"3000" after 60 ns;
+    -- x"4000" after 90 ns,
+    -- x"0000" after 120 ns;
+
+  input_B <= x"1000",
+    x"2000" after 30 ns,
+    x"3000" after 60 ns;
+    -- x"4000" after 90 ns,
+    -- x"0000" after 120 ns;
 
 end;

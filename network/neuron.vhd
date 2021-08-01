@@ -10,28 +10,28 @@ entity neuron is
     n_inputs_neuron : integer
   );
   port (
-    INPUTS : in coluna(0 to n_inputs_neuron - 1)(n_bits - 1 downto 0);
-    W      : in coluna(0 to n_inputs_neuron - 1)(n_bits - 1 downto 0);
-    OUTPUT : out std_logic_vector(n_bits - 1 downto 0));
+    INPUTS : in array_slv(0 to n_inputs_neuron - 1);
+    W      : in array_slv(0 to n_inputs_neuron - 1);
+    OUTPUT : out slv);
 end neuron;
 
 architecture rtl of neuron is
 
-  signal to_activation : std_logic_vector(n_bits - 1 downto 0);
+  signal to_activation : slv := (others => '0');
 
 begin
 
-  x : process (INPUTS, W)
+  sum_all_inputs : process (INPUTS, W)
     variable temp : signed(2 * n_bits - 1 downto 0);
   begin
     temp := (others => '0');
     for i in 0 to n_inputs_neuron - 1 loop
       temp := temp + signed(INPUTS(i)) * signed(W(i));
     end loop;
-    to_activation <= std_logic_vector(temp(n_bits - 1 downto 0));
+    to_activation <= std_logic_vector(temp(27 downto 12)); -- Q4.12
   end process;
 
-  OUTPUT <= x"FF"; -- add relu
+    OUTPUT        <= to_activation; -- add relu
 
   -- activation : if activation_type = "relu" generate
   --   OUTPUT <= to_activation; -- add relu
