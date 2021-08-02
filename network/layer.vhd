@@ -9,9 +9,9 @@ entity layer is
     constant layer_index : integer
   );
   port (
-    layer_IN   : in array_slv(0 to n_inputs_by_layer(layer_index) - 1);
-    layer_W_IN : in array_slv(0 to n_weights_by_layer(layer_index) - 1);
-    layer_OUT  : out array_slv(0 to n_neurons_by_layer(layer_index) - 1)
+    inputs_layer  : in array_slv(0 to n_inputs_by_layer(layer_index) - 1);
+    weights_layer : in array_slv(0 to n_weights_by_layer(layer_index) - 1);
+    output_layer  : out array_slv(0 to n_neurons_by_layer(layer_index) - 1)
   );
 end layer;
 
@@ -22,9 +22,9 @@ architecture rtl of layer is
       n_inputs_neuron : integer
     );
     port (
-      INPUTS : in array_slv(0 to n_neurons_by_layer(layer_index) - 1);
-      W      : in array_slv(0 to n_neurons_by_layer(layer_index) - 1);
-      OUTPUT : out slv);
+      inputs_neuron  : in array_slv(0 to n_neurons_by_layer(layer_index) - 1);
+      weights_neuron : in array_slv(0 to n_neurons_by_layer(layer_index) - 1);
+      output_neuron  : out slv);
   end component;
 
 begin
@@ -34,9 +34,9 @@ begin
       n_inputs_neuron => n_neurons_by_layer(layer_index)
     )
     port map(
-      INPUTS => layer_IN,
-      W      => layer_W_IN(i * n_neurons_by_layer(layer_index) to i * n_neurons_by_layer(layer_index) + n_neurons_by_layer(layer_index) - 1),
-      OUTPUT => layer_OUT(i));
+      inputs_neuron  => inputs_layer,
+      weights_neuron => weights_layer(i * n_neurons_by_layer(layer_index) to i * n_neurons_by_layer(layer_index) + n_neurons_by_layer(layer_index) - 1),
+      output_neuron  => output_layer(i));
   end generate;
 
 end architecture;

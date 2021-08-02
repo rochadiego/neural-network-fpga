@@ -14,7 +14,7 @@ end sigmoid;
 
 architecture rtl of sigmoid is
 
-  signal x : signed(n_bits - 1 downto 0) := (others => '0');
+  signal x  : signed(n_bits - 1 downto 0)     := (others => '0');
   signal y  : signed(n_bits * 2 - 1 downto 0) := (others => '0');
   signal y2 : signed(n_bits - 1 downto 0)     := (others => '0');
 
@@ -29,8 +29,7 @@ begin
 
   output_sigmoid <= std_logic_vector(y2);
 
-  a <=
-    x"0000" when (x <= x"B000") else
+  a <= x"0000" when (x <= x"B000") else
     x"007A" when (x > x"B000") and (x <= x"DA00") else
     x"0224" when (x > x"DA00") and (x <= x"F000") else
     x"03B2" when (x > x"F000") and (x < x"0000") else
@@ -40,8 +39,7 @@ begin
     x"0080" when (x >= x"2600") and (x < x"5000") else
     x"0000" when (x >= x"5000");
 
-  b <=
-    x"0000" when (x <= x"B000") else
+  b <= x"0000" when (x <= x"B000") else
     x"027E" when (x > x"B000") and (x <= x"DA00") else
     x"0672" when (x > x"DA00") and (x <= x"F000") else
     x"0800" when (x > x"F000") and (x < x"0000") else

@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use ieee.fixed_pkg.all;
 
 library work;
 use work.network_pkg.all;
@@ -10,9 +11,9 @@ entity neuron is
     n_inputs_neuron : integer
   );
   port (
-    INPUTS : in array_slv(0 to n_inputs_neuron - 1);
-    W      : in array_slv(0 to n_inputs_neuron - 1);
-    OUTPUT : out slv);
+    inputs_neuron  : in array_slv(0 to n_inputs_neuron - 1);
+    weights_neuron : in array_slv(0 to n_inputs_neuron - 1);
+    output_neuron  : out slv);
 end neuron;
 
 architecture rtl of neuron is
@@ -28,20 +29,18 @@ architecture rtl of neuron is
 
 begin
 
-  sum_all_inputs : process (INPUTS, W)
-    variable temp : signed(2 * n_bits - 1 downto 0);
+  sum_all_inputs : process (inputs_neuron, weights_neuron)
+    variable sum : sfixed(3 downto -12);
   begin
-    temp := (others => '0');
+    sum := (others => '0');
     for i in 0 to n_inputs_neuron - 1 loop
-      temp := temp + signed(INPUTS(i)) * signed(W(i));
+      sum := resize(sfixed(inputs_neuron(i)) * sfixed(weights_neuron(i)) + sum, sum);
     end loop;
-    -- bugado, alguns estouros de memória ficam negativos
-    to_activation <= std_logic_vector(temp(27 downto 12)); -- Q4.12
-    report to_hstring(to_activation);
+    to_activation <= to_slv(sum);
   end process;
 
   activation : relu port map(
     input_relu  => to_activation,
-    output_relu => OUTPUT
+    output_relu => output_neuron
   );
 end architecture;

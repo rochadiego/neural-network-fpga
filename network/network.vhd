@@ -6,8 +6,8 @@ use work.network_pkg.all;
 
 entity network is
   port (
-    network_input  : in array_slv(0 to n_inputs_by_layer(0) - 1);
-    network_output : out array_slv(0 to n_neurons_by_layer(1) - 1));
+    inputs_network : in array_slv(0 to n_inputs_by_layer(0) - 1);
+    output_network : out array_slv(0 to n_neurons_by_layer(1) - 1));
 end network;
 
 architecture rtl of network is
@@ -17,9 +17,9 @@ architecture rtl of network is
       layer_index : integer
     );
     port (
-      layer_IN   : in array_slv(0 to n_inputs_by_layer(layer_index) - 1);
-      layer_W_IN : in array_slv(0 to n_weights_by_layer(layer_index) - 1);
-      layer_OUT  : out array_slv(0 to n_neurons_by_layer(layer_index) - 1)
+      inputs_layer  : in array_slv(0 to n_inputs_by_layer(layer_index) - 1);
+      weights_layer : in array_slv(0 to n_weights_by_layer(layer_index) - 1);
+      output_layer  : out array_slv(0 to n_neurons_by_layer(layer_index) - 1)
     );
   end component;
 
@@ -48,29 +48,29 @@ architecture rtl of network is
 begin
 
   -- first deep layer 
-  inputs_first_deep_layer <= network_input;
+  inputs_first_deep_layer <= inputs_network;
 
   -- parse weights
   weights_first_deep_layer  <= all_weights(0 to n_weights_by_layer(0) - 1);
-  weights_second_deep_layer <= all_weights(n_weights_by_layer(0) to n_all_weights - 1);
+  weights_second_deep_layer <= all_weights(n_weights_by_layer(0) to n_weights_by_layer(0) + n_weights_by_layer(1) - 1);
 
   inst_first_deep_layer : layer generic map(
     layer_index => 0
   )
   port map(
-    layer_IN   => inputs_first_deep_layer,
-    layer_W_IN => weights_first_deep_layer,
-    layer_OUT  => inputs_second_deep_layer);
+    inputs_layer  => inputs_first_deep_layer,
+    weights_layer => weights_first_deep_layer,
+    output_layer  => inputs_second_deep_layer);
 
   inst_second_deep_layer : layer generic map(
     layer_index => 1
   )
   port map(
-    layer_IN   => inputs_second_deep_layer,
-    layer_W_IN => weights_second_deep_layer,
-    layer_OUT  => outputs_second_deep_layer);
+    inputs_layer  => inputs_second_deep_layer,
+    weights_layer => weights_second_deep_layer,
+    output_layer  => outputs_second_deep_layer);
 
-  network_output <= outputs_second_deep_layer;
+  output_network <= outputs_second_deep_layer;
 
   -- add neuronio aqui e função sigmoid
 

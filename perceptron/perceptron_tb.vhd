@@ -35,23 +35,23 @@ begin
     output => output
   );
 
-  inputA <= x"0003",
-    x"0010" after 10 ns,
+  inputA <= x"B000",
+    x"4000" after 10 ns,
     x"0002" after 20 ns,
     x"0000" after 30 ns;
 
-  inputB <= x"0001",
+  inputB <= x"F000",
     x"0000" after 10 ns,
     x"0003" after 20 ns,
     x"0000" after 30 ns;
 
-  inputC <= x"0003",
-    x"0010" after 10 ns,
+  inputC <= x"F000",
+    x"4000" after 10 ns,
     x"0002" after 20 ns,
     x"0000" after 30 ns;
 
-  inputD <= x"0003",
-    x"0010" after 10 ns,
+  inputD <= x"F000",
+    x"4000" after 10 ns,
     x"0002" after 20 ns,
     x"0000" after 30 ns;
 
