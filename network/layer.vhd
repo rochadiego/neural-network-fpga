@@ -22,21 +22,26 @@ architecture rtl of layer is
       n_inputs_neuron : integer
     );
     port (
-      inputs_neuron  : in array_slv(0 to n_neurons_by_layer(layer_index) - 1);
-      weights_neuron : in array_slv(0 to n_neurons_by_layer(layer_index) - 1);
+      inputs_neuron  : in array_slv(0 to n_inputs_by_layer(layer_index) - 1);
+      weights_neuron : in array_slv(0 to n_inputs_by_layer(layer_index) - 1);
       output_neuron  : out slv);
   end component;
 
 begin
 
   add_neurons_to_layer : for i in 0 to n_neurons_by_layer(layer_index) - 1 generate
-    x : neuron generic map(
-      n_inputs_neuron => n_neurons_by_layer(layer_index)
+    add_neuron : neuron generic map(
+      n_inputs_neuron => n_inputs_by_layer(layer_index)
     )
     port map(
       inputs_neuron  => inputs_layer,
-      weights_neuron => weights_layer(i * n_neurons_by_layer(layer_index) to i * n_neurons_by_layer(layer_index) + n_neurons_by_layer(layer_index) - 1),
+      weights_neuron => weights_layer(i * n_inputs_by_layer(layer_index) to i * n_inputs_by_layer(layer_index) + n_inputs_by_layer(layer_index) - 1),
       output_neuron  => output_layer(i));
   end generate;
+
+process (all)
+begin
+  report "passou camada";
+end process;
 
 end architecture;

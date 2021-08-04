@@ -34,7 +34,7 @@ begin
   begin
     sum := (others => '0');
     for i in 0 to n_inputs_neuron - 1 loop
-      sum := resize(sfixed(inputs_neuron(i)) * sfixed(weights_neuron(i)) + sum, sum);
+      sum := resize(to_sfixed(inputs_neuron(i), sum) * to_sfixed(weights_neuron(i), sum) + sum, sum);
     end loop;
     to_activation <= to_slv(sum);
   end process;
