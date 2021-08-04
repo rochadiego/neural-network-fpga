@@ -72,6 +72,19 @@ begin
 
   output_network <= outputs_second_deep_layer;
 
-  -- add neuronio aqui e função sigmoid
+  -- sigmoid_neuron : process (inputs_neuron, weights_neuron)
+  --   variable sum : sfixed(3 downto -12);
+  -- begin
+  --   sum := (others => '0');
+  --   for i in 0 to n_inputs_neuron - 1 loop
+  --     sum := resize(to_sfixed(inputs_neuron(i), sum) * to_sfixed(weights_neuron(i), sum) + sum, sum);
+  --   end loop;
+  --   to_activation <= to_slv(sum);
+  -- end process;
+
+  -- activation : sigmoid port map(
+  --   input_sigmoid  => to_activation,
+  --   output_sigmoid => output_neuron
+  -- );
 
 end architecture;

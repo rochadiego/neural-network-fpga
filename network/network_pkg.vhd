@@ -3,19 +3,34 @@ use IEEE.std_logic_1164.all;
 use std.textio.all;
 package network_pkg is
 
-  -- definição de tipos genéricos
+  --barramento 
   constant n_bits : integer := 16;
   subtype slv is std_logic_vector(n_bits - 1 downto 0);
   type array_integer is array (integer range <>) of integer;
   type array_slv is array (integer range <>) of slv;
-  -- entrada da rede, depende do dataset
+
+  -- #### AJUSTES DA REDE NEURAL ####
+  -- tamanho da entrada de dados
   constant n_inputs_network : integer := 2;
 
   -- camadas profundas
-  constant n_neurons_by_layer : array_integer(0 to 1) := (2, 3);
-  constant n_inputs_by_layer  : array_integer(0 to 2) := (n_inputs_network, n_neurons_by_layer(0), n_neurons_by_layer(1));
-  constant n_weights_by_layer : array_integer(0 to 1) := (4, 6); --neurônio(0) * entrada(0)
-  constant n_all_weights      : integer               := 10; -- soma pesos de cada camada 
+  constant n_neurons_by_layer : array_integer(0 to 2) := (3, 3, 1);
+  -- #### FIM DOS AJUSTES DA REDE NEURAL ####
+
+  constant n_inputs_by_layer : array_integer(0 to 2) :=
+  (n_inputs_network,
+  n_neurons_by_layer(0),
+  n_neurons_by_layer(1));
+
+  constant n_weights_by_layer : array_integer(0 to 2) :=
+  (n_neurons_by_layer(0) * n_inputs_by_layer(0),
+  n_neurons_by_layer(1) * n_inputs_by_layer(1),
+  n_neurons_by_layer(2) * n_inputs_by_layer(2));
+
+  constant n_all_weights : integer :=
+  n_weights_by_layer(0) +
+  n_weights_by_layer(1) +
+  n_weights_by_layer(2);
 
   --Declaração da função
   impure function init_ram_hex return array_slv;
