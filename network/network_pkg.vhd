@@ -14,7 +14,7 @@ package network_pkg is
   constant n_inputs_network : integer := 2;
 
   -- camadas profundas
-  constant n_neurons_by_layer : array_integer(0 to 2) := (3, 3, 1);
+  constant n_neurons_by_layer : array_integer(0 to 2) := (3, 2, 1);
   -- #### FIM DOS AJUSTES DA REDE NEURAL ####
 
   constant n_inputs_by_layer : array_integer(0 to 2) :=
@@ -31,6 +31,23 @@ package network_pkg is
   n_weights_by_layer(0) +
   n_weights_by_layer(1) +
   n_weights_by_layer(2);
+
+  constant n_all_inputs : integer :=
+  n_inputs_by_layer(0) +
+  n_inputs_by_layer(1) +
+  n_inputs_by_layer(2);
+
+  constant index_helper_n_inputs_by_layer : array_integer(0 to 3) :=
+  (0, n_inputs_by_layer(0),
+  n_inputs_by_layer(0) + n_inputs_by_layer(1),
+  n_inputs_by_layer(0) + n_inputs_by_layer(1) + n_inputs_by_layer(2));
+
+  constant index_helper_n_weights_by_layer : array_integer(0 to 3) :=
+  (0, n_weights_by_layer(0),
+  n_weights_by_layer(0) + n_weights_by_layer(1),
+  n_weights_by_layer(0) + n_weights_by_layer(1) + n_weights_by_layer(2));
+
+  constant n_layers : integer := n_neurons_by_layer'right;
 
   --Declaração da função
   impure function init_ram_hex return array_slv;

@@ -29,13 +29,13 @@ begin
   output_B <= output_bench(1);
   -- output_C <= output_bench(2);
 
-  input_A <= x"0800",
+  input_A <= x"1000",
     x"2000" after 30 ns,
     x"3000" after 60 ns;
   -- x"4000" after 90 ns,
   -- x"0000" after 120 ns;
 
-  input_B <= x"0800",
+  input_B <= x"1000",
     x"2000" after 30 ns,
     x"3000" after 60 ns;
   -- x"4000" after 90 ns,

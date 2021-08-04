@@ -39,9 +39,4 @@ begin
       output_neuron  => output_layer(i));
   end generate;
 
-process (all)
-begin
-  report "passou camada";
-end process;
-
 end architecture;

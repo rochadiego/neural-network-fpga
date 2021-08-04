@@ -30,61 +30,25 @@ architecture rtl of network is
     );
   end component;
 
-  constant n_layers : integer := n_neurons_by_layer'right;
-
   signal all_weights : array_slv(0 to n_all_weights - 1) := init_ram_hex;
-
-  -- first deep layer
-  signal inputs_first_deep_layer  : array_slv(0 to n_inputs_by_layer(0) - 1);
-  signal weights_first_deep_layer : array_slv(0 to n_weights_by_layer(0) - 1);
-
-  -- second deep layer
-  signal inputs_second_deep_layer  : array_slv(0 to n_inputs_by_layer(1) - 1);
-  signal weights_second_deep_layer : array_slv(0 to n_weights_by_layer(1) - 1);
-
-  -- output neural network
-  signal outputs_second_deep_layer : array_slv(0 to n_neurons_by_layer(1) - 1);
+  signal all_inputs  : array_slv(0 to n_all_inputs - 1)  := (others => (others => '0'));
 
 begin
 
-  -- first deep layer 
-  inputs_first_deep_layer <= inputs_network;
+  all_inputs(0 to n_inputs_by_layer(0) - 1) <= inputs_network;
 
-  -- parse weights
-  weights_first_deep_layer  <= all_weights(0 to n_weights_by_layer(0) - 1);
-  weights_second_deep_layer <= all_weights(n_weights_by_layer(0) to n_weights_by_layer(0) + n_weights_by_layer(1) - 1);
+  add_layers_to_network : for i in 0 to n_layers - 1 generate
+    add_layer : layer
+    generic map(
+      layer_index => i
+    )
+    port map(
+      inputs_layer  => all_inputs(index_helper_n_inputs_by_layer(i) to index_helper_n_inputs_by_layer(i + 1) - 1),
+      weights_layer => all_weights(index_helper_n_weights_by_layer(i) to index_helper_n_weights_by_layer(i + 1) - 1),
+      output_layer  => all_inputs(index_helper_n_inputs_by_layer(i + 1) to index_helper_n_inputs_by_layer(i + 2) - 1)
+    );
+  end generate;
 
-  inst_first_deep_layer : layer generic map(
-    layer_index => 0
-  )
-  port map(
-    inputs_layer  => inputs_first_deep_layer,
-    weights_layer => weights_first_deep_layer,
-    output_layer  => inputs_second_deep_layer);
-
-  inst_second_deep_layer : layer generic map(
-    layer_index => 1
-  )
-  port map(
-    inputs_layer  => inputs_second_deep_layer,
-    weights_layer => weights_second_deep_layer,
-    output_layer  => outputs_second_deep_layer);
-
-  output_network <= outputs_second_deep_layer;
-
-  -- sigmoid_neuron : process (inputs_neuron, weights_neuron)
-  --   variable sum : sfixed(3 downto -12);
-  -- begin
-  --   sum := (others => '0');
-  --   for i in 0 to n_inputs_neuron - 1 loop
-  --     sum := resize(to_sfixed(inputs_neuron(i), sum) * to_sfixed(weights_neuron(i), sum) + sum, sum);
-  --   end loop;
-  --   to_activation <= to_slv(sum);
-  -- end process;
-
-  -- activation : sigmoid port map(
-  --   input_sigmoid  => to_activation,
-  --   output_sigmoid => output_neuron
-  -- );
-
+  --
+  output_network <= all_inputs(index_helper_n_inputs_by_layer(2) to index_helper_n_inputs_by_layer(3) - 1);
 end architecture;
