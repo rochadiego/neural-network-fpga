@@ -12,33 +12,27 @@ architecture bench of network_tb is
   component network is
     port (
       inputs_network : in array_slv(0 to n_inputs_by_layer(0) - 1);
-      output_network : out array_slv(0 to n_neurons_by_layer(1) - 1));
+      output_network : out slv);
   end component;
 
-  signal input_A, input_B   : slv;
-  signal output_A, output_B : slv;
-  signal output_bench       : array_slv(0 to n_neurons_by_layer(1) - 1);
+  signal input_a_tb, input_b_tb : slv;
+  signal output_tb              : slv;
 
 begin
 
   dut : network port map(
-    inputs_network => (input_A, input_B),
-    output_network => output_bench);
+    inputs_network => (input_a_tb, input_b_tb),
+    output_network => output_tb);
 
-  output_A <= output_bench(0);
-  output_B <= output_bench(1);
-  -- output_C <= output_bench(2);
-
-  input_A <= x"1000",
+  input_a_tb <= x"0800",
     x"2000" after 30 ns,
     x"3000" after 60 ns;
   -- x"4000" after 90 ns,
   -- x"0000" after 120 ns;
 
-  input_B <= x"1000",
+  input_b_tb <= x"FCCD",
     x"2000" after 30 ns,
     x"3000" after 60 ns;
   -- x"4000" after 90 ns,
   -- x"0000" after 120 ns;
-
 end;

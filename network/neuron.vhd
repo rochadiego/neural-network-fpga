@@ -8,7 +8,8 @@ use work.network_pkg.all;
 
 entity neuron is
   generic (
-    n_inputs_neuron : integer
+    n_inputs_neuron : integer;
+    activation      : integer := 0
   );
   port (
     inputs_neuron  : in array_slv(0 to n_inputs_neuron - 1);
@@ -22,6 +23,13 @@ architecture rtl of neuron is
     port (
       input_relu  : in slv;
       output_relu : out slv
+    );
+  end component;
+
+  component sigmoid is
+    port (
+      input_sigmoid  : in slv;
+      output_sigmoid : out slv
     );
   end component;
 
@@ -39,8 +47,16 @@ begin
     to_activation <= to_slv(sum);
   end process;
 
-  activation : relu port map(
-    input_relu  => to_activation,
-    output_relu => output_neuron
-  );
-end architecture;
+  choice_activation : if activation = 0 generate
+    select_relu : relu port map(
+      input_relu  => to_activation,
+      output_relu => output_neuron
+    );
+  else generate
+      select_sigmoid : sigmoid
+      port map(
+        input_sigmoid  => to_activation,
+        output_sigmoid => output_neuron
+      );
+    end generate;
+  end architecture;

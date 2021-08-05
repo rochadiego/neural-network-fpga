@@ -7,7 +7,7 @@ use work.network_pkg.all;
 entity network is
   port (
     inputs_network : in array_slv(0 to n_inputs_by_layer(0) - 1);
-    output_network : out array_slv(0 to n_neurons_by_layer(1) - 1));
+    output_network : out slv);
 end network;
 
 architecture rtl of network is
@@ -23,11 +23,15 @@ architecture rtl of network is
     );
   end component;
 
-  component sigmoid is
-    port (
-      input_sigmoid  : in slv;
-      output_sigmoid : out slv
+  component neuron is
+    generic (
+      n_inputs_neuron : integer;
+      activation      : integer
     );
+    port (
+      inputs_neuron  : in array_slv(0 to n_inputs_by_layer(n_layers) - 1);
+      weights_neuron : in array_slv(0 to n_inputs_by_layer(n_layers) - 1);
+      output_neuron  : out slv);
   end component;
 
   signal all_weights : array_slv(0 to n_all_weights - 1) := init_ram_hex;
@@ -50,5 +54,14 @@ begin
   end generate;
 
   --
-  output_network <= all_inputs(index_helper_n_inputs_by_layer(2) to index_helper_n_inputs_by_layer(3) - 1);
+  sigmoid_layer : neuron
+  generic map(
+    n_inputs_neuron => n_inputs_by_layer(2),
+    activation      => 1
+  )
+  port map(
+    inputs_neuron  => all_inputs(index_helper_n_inputs_by_layer(2) to index_helper_n_inputs_by_layer(3) - 1),
+    weights_neuron => all_weights(index_helper_n_weights_by_layer(2) to index_helper_n_weights_by_layer(3) - 1),
+    output_neuron  => output_network);
+
 end architecture;
