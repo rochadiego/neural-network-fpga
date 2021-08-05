@@ -19,6 +19,7 @@ architecture rtl of network is
     port (
       inputs_layer  : in array_slv(0 to n_inputs_by_layer(layer_index) - 1);
       weights_layer : in array_slv(0 to n_weights_by_layer(layer_index) - 1);
+      biases_layer  : in array_slv(0 to n_neurons_by_layer(layer_index) - 1);
       output_layer  : out array_slv(0 to n_neurons_by_layer(layer_index) - 1)
     );
   end component;
@@ -31,11 +32,13 @@ architecture rtl of network is
     port (
       inputs_neuron  : in array_slv(0 to n_inputs_by_layer(n_layers) - 1);
       weights_neuron : in array_slv(0 to n_inputs_by_layer(n_layers) - 1);
+      bias_neuron    : in slv;
       output_neuron  : out slv);
   end component;
 
-  signal all_weights : array_slv(0 to n_all_weights - 1) := init_ram_hex;
   signal all_inputs  : array_slv(0 to n_all_inputs - 1)  := (others => (others => '0'));
+  signal all_weights : array_slv(0 to n_all_weights - 1) := init_weights;
+  signal all_biases  : array_slv(0 to n_all_biases - 1)  := init_biases;
 
 begin
 
@@ -49,6 +52,7 @@ begin
     port map(
       inputs_layer  => all_inputs(index_helper_n_inputs_by_layer(i) to index_helper_n_inputs_by_layer(i + 1) - 1),
       weights_layer => all_weights(index_helper_n_weights_by_layer(i) to index_helper_n_weights_by_layer(i + 1) - 1),
+      biases_layer  => all_biases(index_helper_n_biases_by_layer(i) to index_helper_n_biases_by_layer(i + 1) - 1),
       output_layer  => all_inputs(index_helper_n_inputs_by_layer(i + 1) to index_helper_n_inputs_by_layer(i + 2) - 1)
     );
   end generate;
@@ -62,6 +66,7 @@ begin
   port map(
     inputs_neuron  => all_inputs(index_helper_n_inputs_by_layer(2) to index_helper_n_inputs_by_layer(3) - 1),
     weights_neuron => all_weights(index_helper_n_weights_by_layer(2) to index_helper_n_weights_by_layer(3) - 1),
+    bias_neuron    => all_biases(2),
     output_neuron  => output_network);
 
 end architecture;

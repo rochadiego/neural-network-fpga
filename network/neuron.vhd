@@ -14,6 +14,7 @@ entity neuron is
   port (
     inputs_neuron  : in array_slv(0 to n_inputs_neuron - 1);
     weights_neuron : in array_slv(0 to n_inputs_neuron - 1);
+    bias_neuron    : in slv;
     output_neuron  : out slv);
 end neuron;
 
@@ -44,6 +45,7 @@ begin
     for i in 0 to n_inputs_neuron - 1 loop
       sum := resize(to_sfixed(inputs_neuron(i), sum) * to_sfixed(weights_neuron(i), sum) + sum, sum);
     end loop;
+    sum := resize(to_sfixed(bias_neuron, sum) + sum, sum);
     to_activation <= to_slv(sum);
   end process;
 
