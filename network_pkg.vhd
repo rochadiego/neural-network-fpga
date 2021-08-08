@@ -14,7 +14,7 @@ package network_pkg is
   constant n_inputs_network : integer := 2;
 
   -- camadas profundas
-  constant n_neurons_by_layer : array_integer(0 to 2) := (3, 2, 1);
+  constant n_neurons_by_layer : array_integer(0 to 2) := (6, 7, 1);
   -- #### FIM DOS AJUSTES DA REDE NEURAL ####
 
   constant n_inputs_by_layer : array_integer(0 to 2) :=

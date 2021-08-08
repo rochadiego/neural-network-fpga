@@ -24,15 +24,15 @@ begin
     inputs_network => (input_a_tb, input_b_tb),
     output_network => output_tb);
 
-  input_a_tb <= x"0800",
-    x"2000" after 30 ns,
-    x"3000" after 60 ns;
-  -- x"4000" after 90 ns,
-  -- x"0000" after 120 ns;
+  input_a_tb <= x"5000",
+    x"0000" after 30 ns,
+    x"0000" after 60 ns,
+    x"1000" after 90 ns,
+    x"0000" after 120 ns;
 
-  input_b_tb <= x"FCCD",
-    x"2000" after 30 ns,
-    x"3000" after 60 ns;
-  -- x"4000" after 90 ns,
-  -- x"0000" after 120 ns;
+  input_b_tb <= x"0000",
+    x"0800" after 30 ns,
+    x"1000" after 60 ns,
+    x"0000" after 90 ns,
+    x"0000" after 120 ns;
 end;

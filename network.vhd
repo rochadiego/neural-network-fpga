@@ -66,7 +66,7 @@ begin
   port map(
     inputs_neuron  => all_inputs(index_helper_n_inputs_by_layer(2) to index_helper_n_inputs_by_layer(3) - 1),
     weights_neuron => all_weights(index_helper_n_weights_by_layer(2) to index_helper_n_weights_by_layer(3) - 1),
-    bias_neuron    => all_biases(2),
+    bias_neuron    => all_biases(n_all_biases - 1),
     output_neuron  => output_network);
 
 end architecture;
