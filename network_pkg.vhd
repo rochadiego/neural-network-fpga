@@ -67,28 +67,31 @@ end network_pkg;
 package body network_pkg is
 
   impure function init_weights return array_slv is
-    file text_file     : text open read_mode is "weights.txt";
-    variable text_line : line;
-
+    file text_file       : text open read_mode is "weights.txt";
+    variable text_line   : line;
+    variable weight      : bit_vector(0 to n_bits - 1);
     variable ram_content : array_slv(0 to n_all_weights - 1);
+
   begin
     for i in 0 to n_all_weights - 1 loop
       readline(text_file, text_line);
-      hread(text_line, ram_content(i));
+      hread(text_line, weight);
+      ram_content(i) := to_stdlogicvector(weight);
     end loop;
-
     return ram_content;
   end function;
 
   impure function init_biases return array_slv is
-    file text_file     : text open read_mode is "biases.txt";
-    variable text_line : line;
-
+    file text_file       : text open read_mode is "biases.txt";
+    variable text_line   : line;
+    variable bias        : bit_vector(0 to n_bits - 1);
     variable ram_content : array_slv(0 to n_all_biases - 1);
+
   begin
     for i in 0 to n_all_biases - 1 loop
       readline(text_file, text_line);
-      hread(text_line, ram_content(i));
+      hread(text_line, bias);
+      ram_content(i) := to_stdlogicvector(bias);
     end loop;
 
     return ram_content;
