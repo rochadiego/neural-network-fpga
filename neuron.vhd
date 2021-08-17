@@ -38,7 +38,7 @@ architecture rtl of neuron is
 
 begin
 
-  sum_all_inputs : process (inputs_neuron, weights_neuron)
+  sum_all_inputs : process (inputs_neuron, weights_neuron, bias_neuron)
     variable sum : sfixed(3 downto -12);
   begin
     sum := (others => '0');
